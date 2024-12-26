@@ -1,0 +1,391 @@
+<html>
+<head>
+    
+    <title>catagory</title>
+    <style>
+        body {
+            
+            margin: 0;
+            padding: 0;
+            background-color: #c1cbef;
+        }
+
+        header {
+            background-color: #a7c5eb;
+            color: black;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #aec8f2;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background-color: #555;
+        }
+
+        /* Category Layout */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            justify-items: center;
+            background-color: #f4f4f4;
+        }
+
+        .category {
+            background-color: rgb(175, 213, 239);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category img {
+            width: 70%;
+            height:80%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .category h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #3961d0;
+        }
+
+        /* Book Layout (Inside Categories) */
+        .book-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .book {
+            background-color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .book img {
+            width: 60px;
+            height: 90px;
+            border-radius: 5px;
+        }
+
+        .book h4 {
+            margin-top: 10px;
+        }
+
+        .book p {
+            font-size: 12px;
+            color: #555;
+        }
+
+        .cart-btn {
+            background-color: #50bab3;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .cart-btn:hover {
+            background-color: #93caed;
+        }
+
+        /* Cart Page */
+        .cart-page {
+            background-color: #9bb6f4;
+            display: none;
+            padding: 20px;
+        }
+
+        .cart-page.active {
+            display: block;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item span {
+            flex: 1;
+        }
+
+        /* Back Button */
+        .back-btn {
+            background-color:white;
+            color:black;
+            
+            margin-top: 10px;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .back-btn img {
+            width: 50px;
+            cursor: pointer;
+        }
+
+        /* Ensure no zooming */
+        .category-container, .book-container {
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+
+        /* Center the content when transitioning */
+        .content-container {
+            transition: transform 0.3s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Catagory</h1>
+</header>
+
+<nav>
+    <a href="story-time.html" onclick="showhomePage()">Home</a>
+    <a href="#" onclick="showCategoryPage()">Category Page</a>
+    <a href="#" onclick="showCartPage()">Cart</a>
+    
+</nav>
+
+
+<div id="categoryPage" class="category-container">
+    <a href="#" class="category-link" onclick="loadCategory('fiction')">
+        <div class="category">
+            <img src= "img/ficc.jpg"alt="Fiction Category">
+            <h3>Fiction</h3>
+        </div>
+    </a>
+    <a href="#" class="category-link" onclick="loadCategory('nonFiction')">
+        <div class="category">
+            <img src="img/fic.jpg"alt="Non-Fiction Category">
+            <h3>Non Fiction</h3>
+        </div>
+    </a>
+    <a href="#" class="category-link" onclick="loadCategory('storyBooks')">
+        <div class="category">
+            <img src="img/sto.jpg" alt="Story Books Category">
+            <h3>Story Books</h3>
+        </div>
+    </a>
+    <a href="#" class="category-link" onclick="loadCategory('novels')">
+        <div class="category">
+            <img src="img/nov.jpg" alt="Novels Category">
+            <h3>Novels</h3>
+        </div>
+    </a>
+    <a href="#" class="category-link" onclick="loadCategory('guides')">
+        <div class="category">
+            <img src="img/img3.webp" alt="Guides Category">
+            <h3>Guides</h3>
+        </div>
+    </a>
+    <a href="#" class="category-link" onclick="loadCategory('competitiveExams')">
+        <div class="category">
+            <img src="img/com.jpg" alt="Competitive Exams Category">
+            <h3>Competitive Exams</h3>
+        </div>
+    </a>
+</div>
+
+<!-- Category Books Display -->
+<div id="categoryBooks" class="book-container" style="display:none;">
+    <div id="bookDetails"></div>
+    <div class="back-btn">
+        <img src="https://via.placeholder.com/50x50?text=Back" alt="Back to Categories" onclick="showCategoryPage()">
+    </div>
+</div>
+
+<!-- Cart Page -->
+<div id="cartPage" class="cart-page">
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <button onclick="pay();">Proceed to Payment</button>
+    <div class="back-btn">
+        <img src="https://via.placeholder.com/50x50?text=Back" alt="Back to Categories" onclick="showCategoryPage()">
+    </div>
+</div>
+
+<script>
+ 
+ 
+
+    let cart = [];
+
+    // List of books for each category
+    const booksData = {
+        fiction: [
+            {title: "<h2>VERITY</h2>", description: "<H2> Rs-290</H2><H4> Varity is a psychological thrillar novel by COLLEEN HOOVER that follows a writer who becomes trapped in a secluded house with a bestselling author and her husband . As the writer digs deeper into the author's past,she uncovers dark secrets and twisted truths</h4> ",image: "img/h1.jpg"},
+            {title: "<h2><i>TWISTED LOVE</i></h2>", description: "<h2>Rs-290</h2><h4>It is a psychological thriller fiction novel that explores the darkest aspects of love,obsession,and relationship.The story revolves around a complex and toxic relationship between two main characterIt delves  into themes of love,possession,and the blurring of lines between reality anf fantasy.", image:"img/h2.jpg"},
+
+             {title: "<h2><i>THE SILENT PATIENT</i></h2>", description: "<h2> Rs-490</h2><h4> The Silent Patient is a psychological thriller book by Alex Michaelides about a famous painter who shoots her husband and then remains silent,refusing to speak or cooperate with the police.The story follows a psychotherapist who becomes obsessed with uncovering the truth behind her silence ", image: "img/h3.jpg"},
+           {title: "<h2><i>IT START WITH US (AND) IT END WITH US</i></h2>", description: "<h2> Rs-190 </h2><h4>It Starts with us is a romance novel by COLLEEN HOOVER that tells the story of a young women who escapes an abusive relationship and finds love again.The book explores themes of trauma,healing,and the power of love</h4>", image: "img/h4.jpg"},
+ {title: "<h2><i>THE CALCULATING STARS</i></h2>", description: "<h2> Rs-288</h2> <h4>The Calculating Stars is a science fiction novel by MARY ROBINETTE KOWAL that explores an alternate history where a meteorite hits the earth in the 1950's leading to a Catastrophic event that prompts humanity to come together to survive .The story follows a female astronaut who becomes a key player in the mission to save humanity. ", image: "img/h5.jpg"}
+
+        ],
+        nonFiction: [
+            {title: "<h2>THE PSYCHOLOGY OF MONEY</h2>", description: "<h2>Rs-490</h2><h4> MORGAN HOUSEL'S book explores the psychological aspects of money management ,highlighting the importance of understanding our own biases and emotions when making financial decisions .Housel drawns on real-life examples and anecdotes to illustrate key concepts.</h4>", image: "img/h9.jpg"},
+            {title: "<h2>HOW TO WIN FRIENDS AND INFLUENCE PEOPLE</h2>", description: "<h2>Rs-190</h2><h4>Written by DALE CARNEGIE,this classic self-help book provides practical advice on how to build relationship,communicate effectively,and influence others.Carnegie's principles focus on empathy,active listening,and genuine interest in others.</h4>", image: "img/h7.jpg"},
+            {title: "<h2>ATOMIC HABITS</h2>", description: "<h2><i>Rs-120 </i></h2>James clear's book offers a comprehensive guide to building good habits and breaking bad ones.Clear argues that smell ,incremental changes can lead to significant improvements in our lives. He provides actionable strategies for creating lasting change.</h4>", image: "img/h8.jpg"},
+            {title: "<h2>THE POWER OF YOUR SUNCONSCIOUS MIND</h2>", description: "<h2>Rs-190</h2><h4> This self-help book by JOSEPH MURPHY explores the idea that the subconscious mind has the power to shape our lives. Murphy argues that by harnessing the power of subconscious ,we can overcome obstacles,achieve success ,and live a more fulfillimg life.</h4>", image: "img/h6.jpg"},
+            {title: "<h2>SAPIENS</h2>", description: "<h2> Rs-500 </h2><h4>YUVAL NOAH HARARI,S sweeping narrative covers the entire history of humankind ,from the emergence of homo sapiens in Africa to the present day.Harari explores themes such as the development of language,the rise of agriculture ,and impact of science and technology on human societies.", image: "img/h10.jpg"}
+
+                    ],
+        storyBooks: [
+            {title: "<h2>AMARA'S BAT</h2>", description: "<h2>Rs-120</h2><h4>AMARA'S BATS is a heartwarming story about a young girl named Amara who befriends a colony of bats.The book explores themes of friendship,empathy,and understanding.", image: "img/h11.jpg"},
+            {title: "<h2>THE LOST STORY</h2>", description: "<h2>Rs-90</h2><h4>The Lost Story is about that explores the dark secrets and lies within a family.The book features unexpected twists and turns,keeping readers engaged and guessing.", image: "img/h12.jpg"},
+            {title: "<h2>GRANDMA'S STORY</h2>", description: "<h2>Rs-140</h2><h4>Grandma's Story is a heartwarming children's book tht celebrates the bond between a grandmother and her grandchild .It is a beautifully illustrated book that tells the story of a grandmother sharing her life experiences ,traditions,and values with her curious grandchild.", image: "img/h13.jpg"},
+            {title: "<h2>GRANDMA'S STORY</h2>", description: "<h2>Rs-90</h2><h4>It is a heartwarming children's book that celebrates the bond between a grandmother and her grandchild.", image: "img/h14.jpg"},
+            {title: "<h2>THE CAT IN THE HAT</h2>", description: "<h2>Rs-260</h2><h4>The cat in the hat is a children's book written and illustrated by THEODOR GEISEL,better known as Dr.Seuss.The story follows two children who re left alone on a rainy day when a mischievous cat,the cat in the hat,appears and creates chaos with his antics.", image: "img/h15.jpg"}
+        ],
+        novels: [
+            {title: "<h2><i>THE STRENGTH IN OUR SCARS</i></h2>", description: "<h2>Rs-150</h2><h4>The Strength in our scars is a self help book by KATI MORTON that focuses on mental health ,trauma,and recovery.The book explores the importance of acknowledging and working through our emotional scars in order to heal and grow. ", image: "img/h16.jpg"},
+            {title: "<h2><i>SOUL IS A RIVER</i></h2>", description: "<h2>Rs-160</h2><h4>The Soul is a river is a book novel that explain to us about our souls.", image: "img/h17.jpg"},
+            {title: "<h2><i>SCULPTURES</i></h2>", description: "<h2>Rs-609</h2><h4> Sculpture is a novel that tells humans mindset.", image: "img/h18.jpg"},
+            {title: "<h2><i>The KEEPER OF HIDDEN BOOKS</i></h2>", description: "<h2>390</h2><h4>The keeper of hidden books tells us about all the secret of human's mind.", image: "img/h19.jpg"},
+            {title: "<h2><i>NOVELS</i></h2>", description: "<h2>Rs-270</h2><h4>NOVELS", image: "img/h20.webp"}
+        ],
+        guides: [
+            {title: "<h2><i>COMPUTER SCIENCE</i></h2>", description: "<h2>Rs-409</h2><h4>A comprehensive textbook on algorithms,covering topics like sorting,searching,and graph algorithms.", image: "img/h21.jpg"},
+            {title: "<h2><i>MATHS</i></h2>", description: "<h2>Rs-120</h2><h4>A comprehensive textbook on calculus,coverig topics like limits,derivatives,and integrals.And also linear algebraand graph theory.", image: "img/h22.jpg"},
+            {title: "<h2><i>PHYSICS</i></h2>", description: "<h2>Rs-403</h2><h4>A classic textbook on physics,covering topics  like electromagnetism,and quantum mechanics", image: "img/h23.jpg"},
+            {title: "<h2><i>CHEMISTRY</i></h2>", description: "<h2>Rs-690</h2><h4>A comprehensive textbook on inorganic and organic ,then thermodynamics,kinetics and quantum mechanics.", image: "img/h24.jpg"},
+            {title: "<h2><i>BIOLOGY</i></h2>", description: "<h2>Rs-509</h2><h4>A comprehensive textbook on molecular biology ,covering topics like DNA,RNA and protein synthesis.", image: "img/h25.jpg"}
+        ],
+        competitiveExams: [
+            {title: "<h2><i>JEE</i></h2>", description: "<h2>Rs-220</h2><h4>This includes physics textbook with solved problems and also problem of practice.A mathematical textbook with solved examples and practice questions.", image: "img/h26.jpg"},
+            {title: "<h2><i>NEET</i></h2>", description: "<h2>Rs-490</h2><h4>This includes NCERT biology,physics, and chemistry.A practice book with challenging questions.", image: "img/h27.jpg"},
+            {title: "<h2><i>IAS</i></h2>", description: "<h2>Rs-290</h2><h4>This includes 11th 12th textbook and textbook on indian polity and governance.", image: "img/h28.jpg"},
+            {title: "<h2><i>UPSC</i></h2>", description: "<h2>Rs-190</h2><h4>A textbook on public administration and governance . A comprehensive manual for general studies.", image: "img/h29.jpg"},
+            {title: "<h2><i>HOW TO CRACK ANY COMPETITIVE EXAMS</i></h2>", description: "<h2>Rs-290</h2><h4>Your one-stop solution book for any competitive exm.</h4>", image: "img/h30.jpg"}
+        ]
+
+    };
+
+    function loadCategory(category) {
+        document.getElementById('categoryPage').style.display = 'none';
+        document.getElementById('categoryBooks').style.display = 'block';
+
+        let booksHtml = '';
+        booksData[category].forEach(book => {
+            booksHtml += `
+                <div class="book">
+                    <img src="${book.image}" alt="${book.title}">
+                    <h4>${book.title}</h4>
+                    <p>${book.description}</p>
+                    <button class="cart-btn" onclick="addToCart('${book.title}')">Add to Cart</button>
+                </div>
+            `;
+
+        });
+
+        document.getElementById('bookDetails').innerHTML = booksHtml;
+    }
+    function pay() {
+        // Creating the payment page dynamically
+        const paymentPageHTML = `
+            <div class="payment-page">
+                <h2>Payment</h2>
+                <form id="paymentForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required><br><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required><br><br>
+                    <label for="cardNumber">Card Number:</label>
+                    <input type="text" id="cardNumber" required><br><br>
+                    <button type="button" onclick="confirmOrder()">Confirm Order</button>
+                </form>
+            </div>
+        `;
+        const container = document.getElementById('cartPage');
+    container.innerHTML = paymentPageHTML;
+
+    // Show the payment page and hide other sections
+    document.getElementById('cartPage').classList.add('active');
+    document.getElementById('categoryPage').style.display = 'none';
+    document.getElementById('categoryBooks').style.display = 'none';
+    }
+
+    function addToCart(bookTitle) {
+        cart.push(bookTitle);
+        alert(${bookTitle} added to cart);
+    }
+
+    function showCartPage() {
+        document.getElementById('categoryPage').style.display = 'none';
+        document.getElementById('categoryBooks').style.display = 'none';
+        document.getElementById('cartPage').classList.add('active');
+
+        let cartHtml = "";
+        cart.forEach((item) => {
+            cartHtml += `
+                <div class="cart-item">
+                    <span>${item}</span>
+                    <span>Remove</span>
+                </div>
+            `;
+        });
+        document.getElementById('cartItems').innerHTML = cartHtml;
+    }
+
+    function showCategoryPage() {
+        document.getElementById('categoryPage').style.display = 'block';
+        document.getElementById('categoryBooks').style.display = 'none';
+        document.getElementById('cartPage').classList.remove('active');
+    }
+    function proceedToPayment() {
+    document.getElementById('cartPage').classList.remove('active');
+    document.getElementById('paymentPage').style.display = 'block';
+}
+
+function confirmOrder() {
+    alert('Order placed successfully!');
+  
+    cart = [];
+    showCategoryPage();
+    document.getElementById('paymentPage').style.display = 'none';
+}
+
+    
+    
+</script>
+
+</body>
+</html>
